@@ -1,0 +1,50 @@
+{
+	"0,0": {
+		"danger": 0,
+		"description": "Hospital room is small, dirty, cold and dark.",
+		"title": "Hospital room",
+		"locationType": "HOSPITAL",
+		"isCeatureAlive": "false",
+		"isSeen": "true",
+		"coordinate": "0,0"},
+	"-1,0": {
+		"danger": 1,
+		"description": "Narrow, cold and dark corridor, walls are gray with a bloody hand prints all over them. It is very long, you cannot see its end, only some blinking, broken light far away.",
+		"title": "Dark corridor",
+		"locationType": "HOSPITAL",
+		"isCeatureAlive": "true",
+		"isSeen": "false",
+		"coordinate": "-1,0"},
+	"1,0": {
+		"danger": 1, 
+		"title": "X ray room",
+		"description": "Small, dark room with a one light board on the wall filled with x rays of people's anatomy, various pictures of bones and a couple of machines, one is like a casket for full body x ray.",
+		"locationType": "HOSPITAL",
+		"isCeatureAlive": "true",
+		"isSeen": "false",
+		"coordinate": "1,0"},
+	"-1,1": {
+		"danger": 1, 
+		"title": "Delivery room",
+		"locationType": "HOSPITAL",
+		"description": "Baby cribs, some of them are pink,some are blue, it seems empty, although there are stuffed animals, one teddy bear is on the floor,pressed with a shelf and plays creepy lullaby.",
+		"isCeatureAlive": "true",
+		"isSeen": "false",
+		"coordinate": "-1,1"},
+	"0,1": {
+		"danger": 1, 
+		"title": "Emergency room",
+		"locationType": "HOSPITAL",
+		"description": "Tight, smelly room with 5 beds, couple of chairs, needles and scalpels on the floor. There is blood on the curtains which are separating each bed.",
+		"isCeatureAlive": "true",
+		"isSeen": "false",
+		"coordinate": "0,1"},
+	"1,1": {
+		"danger": 1, 
+		"title": "Operating room",
+		"locationType": "HOSPITAL",
+		"description": "Dark and cold space with one metal bed and a shelf full of bloody operating instruments.Bed is empty, but sheets on the bed are full with blood and sleaze.",
+		"isCeatureAlive": "true",
+		"isSeen": "false",
+		"coordinate": "1,1"}									
+}
