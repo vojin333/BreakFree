@@ -10,9 +10,9 @@ package com.vojin.go.breakfree.utils;
  *
  */
 public enum ConfiguratioProps {
-	LOCATION_FOLDER(System.getProperty("user.home") + "/breakfree/game_data/game_world_data/"),
-	LOCATION_FILE(System.getProperty("user.home") + "/breakfree/game_data/game_world_data/locations.json"),
-	PLAYER_LOCATION(System.getProperty("user.home") + "/breakfree/game_data/user_data/");
+	LOCATION_FOLDER("game_data/game_world_data/"),
+	LOCATION_FILE("game_data/game_world_data/locations.json"),
+	PLAYER_LOCATION("game_data/user_data/");
 
 	private String description;
 	ConfiguratioProps (String desc) {

@@ -46,7 +46,7 @@ public class GameWorld {
 
     /**
      * This is the main loop for the player gaming
-     * {@link InstructionHandler} checks if it can recongnise a command
+     * {@link InstructionHandler} checks if it can recognise a command
      *
      * 
      */
