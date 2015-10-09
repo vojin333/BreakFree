@@ -2,6 +2,12 @@ package com.vojin.go.breakfree.navigation;
 
 
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.vojin.go.breakfree.domain.entities.Zombie;
 import com.vojin.go.breakfree.utils.Communicator;
 
@@ -11,15 +17,32 @@ import com.vojin.go.breakfree.utils.Communicator;
  *
  * This class represents a map Unit
  */
+@XmlRootElement(name = "location")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Location {
 	
-    private Coordinate coordinate;
-    private String title;
-    private String description;
-    private LocationType locationType;
-    private int dangerRating;
-    private boolean isCeatureAlive;
-    private boolean isSeen;
+	@XmlElement(name = "coordinate")
+	private Coordinate coordinate;
+	
+	@XmlElement(name = "title")
+	private String title;
+	
+	@XmlElement(name = "description")
+	private String description;
+	
+	@XmlElement(name = "locationType")
+	private LocationType locationType;
+	
+	@XmlElement(name = "dangerRating")
+	private int dangerRating;
+	
+	@XmlElement(name = "isCeatureAlive")
+	private boolean isCeatureAlive;
+	
+	@XmlElement(name = "isSeen")
+	private boolean isSeen;
+	
+	
     private Zombie zombie;
 	
     public Location() {
@@ -45,8 +68,8 @@ public class Location {
 	/**
 	 * @param coordinate the coordinate to set
 	 */
-	public void setCoordinate(Coordinate coordinate) {
-		this.coordinate = coordinate;
+	public void setCoordinate(Coordinate coordinateRaw) {
+		this.coordinate = coordinateRaw;
 	}
 
 	/**
@@ -149,6 +172,17 @@ public class Location {
 	 */
 	public void setSeen(boolean isSeen) {
 		this.isSeen = isSeen;
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Location [coordinate=" + coordinate + ", title=" + title + ", description=" + description + ", locationType=" + locationType + ", dangerRating=" + dangerRating + ", isCeatureAlive="
+				+ isCeatureAlive + ", isSeen=" + isSeen + ", zombie=" + zombie + "]";
 	}
 
 	/**

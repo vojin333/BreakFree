@@ -5,14 +5,24 @@ package com.vojin.go.breakfree.menus;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import com.vojin.go.breakfree.BreakFree;
 import com.vojin.go.breakfree.GameWorld;
 import com.vojin.go.breakfree.dependency.BeanFactory;
 import com.vojin.go.breakfree.domain.entities.Player;
+import com.vojin.go.breakfree.navigation.Location;
+import com.vojin.go.breakfree.navigation.Locations;
 import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.ConfiguratioProps;
 import com.vojin.go.breakfree.utils.GameOverException;
+import com.vojin.go.breakfree.utils.ObjectBinder;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 /**
  * 
@@ -26,6 +36,7 @@ public class MainMenu extends Menus implements Runnable {
      
     public MainMenu() {
     	startMenu();
+    	
     }
     
     public void run() {
@@ -49,12 +60,15 @@ public class MainMenu extends Menus implements Runnable {
 				if (e.getGameMessage().equals("close")) {
 					break;
 				}
+			} catch (RepositoryException e) {
+				Communicator.provide("There is a problem with starting game... Reason : " + e.getMessage()) ;
+				Communicator.provide("Please try reinstalling the game");
 			}
 		}
 		Communicator.provide("Game will exit...Bye!");
 	}
 
-	private static boolean selectAnItem(MenuItem menuItem) throws GameOverException{
+	private static boolean selectAnItem(MenuItem menuItem) throws GameOverException, RepositoryException{
 		String playerNameToLoad = menuItem.getInstructionCommand();
 		switch (playerNameToLoad) {
 		case "start":
@@ -135,4 +149,38 @@ public class MainMenu extends Menus implements Runnable {
 		}
 		return false;
 	}
+	
+//	private void loadXML() {
+//		JAXBContext jaxbContext;
+//		try {
+//			
+//			
+//			ObjectBinder objB = new ObjectBinder();
+//			Locations locations = objB.convertXMLToObject(Locations.class);
+//			
+////			objB.convertXMLToObject(Location.class);
+//			
+//			
+//			objB.loadObjectFromXML();
+////			locations.print();
+//			
+////			jaxbContext = JAXBContext.newInstance(Locations.class);
+////			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+////			Locations locations = (Locations) jaxbUnmarshaller.unmarshal(new File("C:\\file.xml")); 
+//			
+//
+//			
+//			List<Location> locationns2 = new ArrayList<Location>();
+//			locationns2 = locations.getLocations();
+//			for (Location location2 : locationns2) {
+//				location2.print();
+//			}
+//		} catch (JAXBException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		
+//	} 
 }

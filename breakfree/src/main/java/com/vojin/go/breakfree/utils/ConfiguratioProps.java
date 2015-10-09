@@ -11,7 +11,7 @@ package com.vojin.go.breakfree.utils;
  */
 public enum ConfiguratioProps {
 	LOCATION_FOLDER("game_data/game_world_data/"),
-	LOCATION_FILE("game_data/game_world_data/locations.json"),
+	LOCATION_FILE("game_data/game_world_data/locations.xml"),
 	PLAYER_LOCATION("game_data/user_data/");
 
 	private String description;

@@ -1,5 +1,7 @@
 package com.vojin.go.breakfree.navigation;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 
 /**
@@ -9,12 +11,16 @@ package com.vojin.go.breakfree.navigation;
  * This class takes two possible constructions: either a string or two integers.
  * 
  */
+@XmlRootElement
 public class Coordinate {
-    public final int x;
-    public final int y;
+    public int x;
+    public int y;
     
 
-    /**
+    public Coordinate(){
+    	
+    }
+	/**
      * Create an 2D coordinate based on a String.
      *
      * @param rawCoordinate - A String containing two numbers, separated by a comma,

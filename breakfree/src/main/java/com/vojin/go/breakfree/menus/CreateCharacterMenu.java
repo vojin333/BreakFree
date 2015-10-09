@@ -12,6 +12,7 @@ import com.vojin.go.breakfree.dependency.BeanFactory;
 import com.vojin.go.breakfree.domain.entities.Player;
 import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.GameOverException;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 /**
  * 
@@ -23,7 +24,7 @@ public class CreateCharacterMenu extends Menus {
 
 	private List<MenuItem> characterSexMenuItems = new ArrayList<>(); 
 
-	public CreateCharacterMenu(String playerName) throws GameOverException{
+	public CreateCharacterMenu(String playerName) throws GameOverException, RepositoryException{
 		this.characterSexMenuItems.add(new MenuItem("male", "male has initialy more stronger hits but slower experiance gain"));
 		this.characterSexMenuItems.add(new MenuItem("female", "female has initialy less stronger hits but faster experiance gain"));
 		
@@ -37,7 +38,7 @@ public class CreateCharacterMenu extends Menus {
 		}
 	}
 	
-	private boolean selectAnItem(MenuItem menuItem, String playerName) throws GameOverException{
+	private boolean selectAnItem(MenuItem menuItem, String playerName) throws GameOverException, RepositoryException{
 		String item = menuItem.getInstructionCommand();
 		if (item.equals("male")) {
 			Player newPlayer = new Player();
