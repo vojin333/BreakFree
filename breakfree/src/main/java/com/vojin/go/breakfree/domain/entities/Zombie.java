@@ -47,8 +47,9 @@ public class Zombie extends CreatureEntity{
     /**
      * Method responsible for defending
      * @param player
+     * @throws RepositoryException 
      */
-	public void defend(Player player) {
+	public void defend(Player player) throws RepositoryException {
 		int attackStrength = player.attack();
 		health = (health > attackStrength) ? health - attackStrength : 0;
 		Communicator.provide(player + " hits " + name + " for " + attackStrength + " HP of damage " + getStatus() + "\n");
@@ -58,10 +59,9 @@ public class Zombie extends CreatureEntity{
 				player.getLocationRepo().saveLocation(player.getCurrentLocation());
 				player.setExperience(player.getExperience() + 1);
 				player.savePlayer(player);
-				Communicator.provide("  " + player + " crashes the skull of " + name + " into a red stain");
+				Communicator.provide("  " + player + " crashes the skull of " + name + "zombie into a red stain");
 			} catch (RepositoryException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw e;
 			}
 
 		}

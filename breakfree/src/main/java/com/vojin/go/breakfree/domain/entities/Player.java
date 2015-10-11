@@ -18,6 +18,7 @@ import com.vojin.go.breakfree.navigation.Coordinate;
 import com.vojin.go.breakfree.navigation.Direction;
 import com.vojin.go.breakfree.navigation.Location;
 import com.vojin.go.breakfree.utils.Communicator;
+import com.vojin.go.breakfree.utils.ConfiguratioProps;
 import com.vojin.go.breakfree.utils.ObjectBinder;
 import com.vojin.go.breakfree.utils.RepositoryException;
 
@@ -35,7 +36,7 @@ public class Player extends CreatureEntity {
 	private int experience;
 	
 	private final Random random = new Random();
-	@XmlTransient
+	
 	private Location currentLocation;
 
 	protected static LocationRepository locationRepo;
@@ -114,6 +115,7 @@ public class Player extends CreatureEntity {
 	 * @param locationRepo
 	 *            the locationRepo to set
 	 */
+	@XmlTransient
 	public void setLocationRepo(LocationRepository locationRepo) {
 		this.locationRepo = locationRepo;
 	}
@@ -191,11 +193,13 @@ public class Player extends CreatureEntity {
 	 * 
 	 */
 	public void printPossibleExits() {
+		Communicator.provide("Possible exits : ");
 		Map<Direction, Location> possibleExits = locationRepo.getPossibleExits(currentLocation.getCoordinate());
 		for (Map.Entry<Direction, Location> directionExits : possibleExits.entrySet()) {
 			Communicator.provide(directionExits.getKey().getDescription() + ": ");
 			Communicator.provide("    " + directionExits.getValue().getTitle());
 		}
+		Communicator.provide("");
 	}
 
 	/**
@@ -241,7 +245,7 @@ public class Player extends CreatureEntity {
 	 * @see
 	 */
 	public String getPlayerFileName(String name) {
-		return "game_data/user_data/" + name + "/" + "profile.xml";
+		return ConfiguratioProps.PLAYER_LOCATION.getDescription() + name + "/" + "profile.xml";
 	}
 
 	/**
@@ -254,11 +258,12 @@ public class Player extends CreatureEntity {
 	public Player load(String name) throws RepositoryException {
 		Player playerToReturn = null;
 		try {
-			File fileLocation = new File(name);
+			String fileName = getPlayerFileName(name);
+			File fileLocation = new File(fileName);
 			ObjectBinder objectBinder = new ObjectBinder();
 			playerToReturn = objectBinder.convertXMLToObject(Player.class, fileLocation);
 		} catch (JAXBException ex) {
-			throw new RepositoryException(ex.getMessage());
+			throw new RepositoryException("Player data can't be loaded");
 		}
 
 		return playerToReturn;
@@ -283,23 +288,21 @@ public class Player extends CreatureEntity {
             Communicator.provide("*** Game data has been saved ***");
             
         } catch (JAXBException e) {
-        	throw new RepositoryException(e.getMessage());
-//          Communicator.provide("\nUnable to save game data to file '" + fileName + "'.");
-			//TODO vojin
+        	throw new RepositoryException("Unable to save game data to file");
 		}
     }
 	
-    /**
-     * 
-     * @param name
-     * @return
-     * @see
-     */
-	public boolean isPlayerExist(String name) {
-		File file = new File(getPlayerFileName(name));
-		return file.exists();
-	}
-	
+    public String getStats() {
+    	 String message = "\nPlayer name: " + getName();
+    	 message += "\nDescription: " + getDescription();
+    	 message += "\nSex: " + getSex();
+         message += "\nHealth/Max: " + getHealth() + "/" + "40";
+         message += "\nNumber of potions: " + getNumPotions() + "/10";
+         message += "\nExperience: " + getExperience();
+  
+         return message;
+    }
+    
 	@Override
 	public String toString() {
 		return name;

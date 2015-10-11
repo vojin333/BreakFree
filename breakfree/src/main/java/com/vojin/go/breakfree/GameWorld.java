@@ -27,15 +27,12 @@ public class GameWorld {
 		switch (playerType) {
 		case "new":
 			printIntro();
-			Communicator.provide("Your Current location is :");
 			player.getCurrentLocation().print();
 			player.getLocationRepo().saveLocation(player.getCurrentLocation());
 			continueQuest();
 			break;
 		case "old":
 			Communicator.provide("Welcome back, " + player.getName() + "!");
-			Communicator.provide("");
-			Communicator.provide("Your Current location is :");
 			player.getCurrentLocation().print();
 			continueQuest();
 			break;
@@ -47,7 +44,7 @@ public class GameWorld {
 
     /**
      * This is the main loop for the player gaming
-     * {@link InstructionHandler} checks if it can recognise a command
+     * {@link InstructionHandler} checks if it can recognize a command
      * @throws RepositoryException 
      *
      * 
@@ -59,12 +56,13 @@ public class GameWorld {
 				if (player.getCurrentLocation().isCeatureAlive()) {
 					player.getCurrentLocation().setZombie(CreatureFactory.createCreature());
 					Communicator.provide(player.getCurrentLocation().getZombie().getDescription() + " and it is crwaling towards you");
-					Communicator.provide(" If you wish to fight a zombie type 'fight'");
+					Communicator.provide("If you wish to fight a zombie type 'fight'");
+					
 				}
-				Communicator.provide("If you wish to explore further(go direction)");
-				Communicator.provide("Possible exits : ");
+				Communicator.provide("\nIf you wish to explore further (type 'go' and first letter of direction i.e: 'go n' to go north)");
 				player.printPossibleExits();
 
+				Communicator.provide("Type 'help' to see all possible commands");
 				Communicator.provide("What is your next move:");
 				String action = Communicator.accept();
 				continueGame = parser.parse(player, action);

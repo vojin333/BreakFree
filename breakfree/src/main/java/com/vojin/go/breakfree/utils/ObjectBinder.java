@@ -28,7 +28,6 @@ public class ObjectBinder {
             Unmarshaller um = context.createUnmarshaller();
             return (T) um.unmarshal(location);
         } catch (JAXBException je) {
-        	je.printStackTrace();
             throw new JAXBException("Error interpreting XML response", je);
         }
     }
@@ -45,7 +44,6 @@ public class ObjectBinder {
             Marshaller marshaller = context.createMarshaller();
             marshaller.marshal(classTo, location);
         } catch (JAXBException je) {
-        	je.printStackTrace();
             throw new JAXBException("Error Saving Object to  XML response", je);
         }
     }

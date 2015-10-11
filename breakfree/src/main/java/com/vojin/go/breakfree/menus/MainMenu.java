@@ -50,7 +50,7 @@ public class MainMenu extends Menus implements Runnable {
 					break;
 				}
 			} catch (RepositoryException e) {
-				Communicator.provide("There is a problem with starting game... Reason : " + e.getMessage()) ;
+				Communicator.provide("There is a problem with starting game... Reason : " + e.getRepositoryMessage()) ;
 				Communicator.provide("Please try reinstalling the game");
 			}
 		}
@@ -113,7 +113,7 @@ public class MainMenu extends Menus implements Runnable {
 				}
 				i += 1;
 			}
-			Communicator.provide("\nWhat is the name of the player you want to load? Type 'back' to go back");
+			Communicator.provide("\n  Type whole name of the player you want to load? Type 'back' to go back");
 		} else {
 			Communicator.provide("There are no players saved yet... Type 'back' to go back" );
 		}
@@ -138,38 +138,4 @@ public class MainMenu extends Menus implements Runnable {
 		}
 		return false;
 	}
-	
-//	private void loadXML() {
-//		JAXBContext jaxbContext;
-//		try {
-//			
-//			
-//			ObjectBinder objB = new ObjectBinder();
-//			Locations locations = objB.convertXMLToObject(Locations.class);
-//			
-////			objB.convertXMLToObject(Location.class);
-//			
-//			
-//			objB.loadObjectFromXML();
-////			locations.print();
-//			
-////			jaxbContext = JAXBContext.newInstance(Locations.class);
-////			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-////			Locations locations = (Locations) jaxbUnmarshaller.unmarshal(new File("C:\\file.xml")); 
-//			
-//
-//			
-//			List<Location> locationns2 = new ArrayList<Location>();
-//			locationns2 = locations.getLocations();
-//			for (Location location2 : locationns2) {
-//				location2.print();
-//			}
-//		} catch (JAXBException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		
-//	} 
 }

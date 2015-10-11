@@ -4,6 +4,7 @@ package com.vojin.go.breakfree.navigation;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.vojin.go.breakfree.domain.entities.Zombie;
 import com.vojin.go.breakfree.utils.Communicator;
@@ -15,7 +16,6 @@ import com.vojin.go.breakfree.utils.Communicator;
  * This class represents a map Unit
  */
 @XmlRootElement(name = "location")
-
 public class Location {
 	
 	private Coordinate coordinate;
@@ -126,6 +126,7 @@ public class Location {
 	/**
 	 * @param zombie the zombie to set
 	 */
+	@XmlTransient
 	public void setZombie(Zombie monster) {
 		this.zombie = monster;
 	}
@@ -181,7 +182,9 @@ public class Location {
 	 * @see
 	 */
 	public void print() {
-        Communicator.provide("\n" + getTitle() + ":");
+		Communicator.provide("\n" + "Your current location is:");
+        Communicator.provide(getTitle() + ":");
         Communicator.provide("    " + getDescription());
+        Communicator.provide("\n");
     }
 }

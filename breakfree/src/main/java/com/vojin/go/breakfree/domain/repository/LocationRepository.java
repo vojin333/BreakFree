@@ -64,7 +64,7 @@ public class LocationRepository {
 				this.locations.put(location.getCoordinate(), location);
 			}
 		} catch (JAXBException jaxE) {
-			throw new RepositoryException(jaxE.getMessage());
+			throw new RepositoryException("Problem with loading location data");
 		}
 	}
 
@@ -103,10 +103,7 @@ public class LocationRepository {
             mar.marshal(locationsObject, fileLocation);
             
         } catch (JAXBException e) {
-			// TODO Auto-generated catch block
-        	e.printStackTrace();
-        	throw new RepositoryException(e.getMessage());
-			
+        	throw new RepositoryException("Problem with saving location data");
 		}
     }
 	
@@ -124,8 +121,7 @@ public class LocationRepository {
 		try {
 			saveLocations();
 		} catch (RepositoryException e) {
-			e.printStackTrace();
-			throw new RepositoryException(e.getMessage());
+			throw e;
 		}
 	}
 	

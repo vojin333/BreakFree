@@ -45,9 +45,7 @@ public enum InstructionsCollection {
         this.player = player;
     }
 
-    //TODO help instruction to print all possible instructions
-
-    @Instruction(instruction="help", aliases="h", description="Prints help")
+    @Instruction(instruction="help", aliases="help", description="Prints help")
 	public void command_help() {
 		Method[] methods = InstructionsCollection.class.getMethods();
 		int commandWidth = 0;
@@ -76,11 +74,10 @@ public enum InstructionsCollection {
 			String message = String.format("%-" + commandWidth + "s %-" + descriptionWidth + "s", command, annotation.description());
 
 			Communicator.provide(message);
-
 		}
 	}
     
-    @Instruction(instruction="fight", aliases="fight", description="Battle Starts")
+    @Instruction(instruction="fight", aliases="fight", description="Starts a fight")
 	public void commandFighting() throws GameOverException, RepositoryException {
 		if (player.getCurrentLocation().getZombie().isAlive()) {
 			new Battle(player, player.getCurrentLocation().getZombie());
@@ -88,11 +85,11 @@ public enum InstructionsCollection {
 	}
     
     @Instruction(instruction="attack", aliases="a", description="Attacks")
-	public void commandAttackCreature() {
+	public void commandAttackCreature() throws RepositoryException{
     	player.getCurrentLocation().getZombie().defend(player);
 	}
     
-    @Instruction(instruction="heal", aliases="h", description="Healing")
+    @Instruction(instruction="heal", aliases="h", description="Healing player")
 	public void commandHealing() {
     	if (player.getNumPotions() > 0) {
 			player.heal();
@@ -101,7 +98,7 @@ public enum InstructionsCollection {
 		}
 	}
     
-    @Instruction(instruction="go", aliases="g", description="Goto a direction") 
+    @Instruction(instruction="go", aliases="g", description="Goto a direction (i.e. 'go n' to go North)") 
 	public void commandGo(String arg) throws RepositoryException{
 		
 		arg = MOVE_DIRECTIONS.get(arg);
@@ -113,7 +110,7 @@ public enum InstructionsCollection {
 			player.setCurrentLocation(newLocation);
 			player.getCurrentLocation().setSeen(true);
 			player.getLocationRepo().saveLocation(player.getCurrentLocation());
-			Communicator.provide("** The Check Point has been saved **");
+			Communicator.provide("*** The Check Point has been saved ***");
 			player.getCurrentLocation().print();
 			// TODO keep a track of the monsters
 		} else {
@@ -124,6 +121,11 @@ public enum InstructionsCollection {
     @Instruction(instruction="save", aliases="s", description="Save")
 	public void commandSaving() throws RepositoryException {
     	player.savePlayer(player);
+	}
+    
+    @Instruction(instruction="stats", aliases="stats", description="Save")
+	public void commandStatistics() {
+    	Communicator.provide(player.getStats());
 	}
     	
  
