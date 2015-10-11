@@ -7,6 +7,7 @@ import com.vojin.go.breakfree.prompter.InstructionHandler;
 import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.CreatureFactory;
 import com.vojin.go.breakfree.utils.GameOverException;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 /**
  * 
@@ -20,7 +21,7 @@ public class GameWorld {
 	public InstructionHandler parser;
 	Player player = null;
 
-	public GameWorld(Player player, String playerType) throws GameOverException {
+	public GameWorld(Player player, String playerType) throws GameOverException, RepositoryException {
 		this.parser = new InstructionHandler(player);
 		this.player = player;
 		switch (playerType) {
@@ -47,10 +48,11 @@ public class GameWorld {
     /**
      * This is the main loop for the player gaming
      * {@link InstructionHandler} checks if it can recognise a command
+     * @throws RepositoryException 
      *
      * 
      */
-	public void continueQuest() throws GameOverException {
+	public void continueQuest() throws GameOverException, RepositoryException {
 		boolean continueGame = true;
 		try {
 			while (continueGame) {
@@ -74,6 +76,8 @@ public class GameWorld {
 			} else {
 				throw e;
 			}
+		} catch (RepositoryException e) {
+			throw e;
 		}
 
 	}

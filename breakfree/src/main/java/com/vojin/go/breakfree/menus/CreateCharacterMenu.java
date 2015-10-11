@@ -47,7 +47,7 @@ public class CreateCharacterMenu extends Menus {
 			//setIntial coordinate
 			newPlayer.setCurrentLocation(newPlayer.getLocationRepo().getInitialLocation());
 			newPlayer.setSex(item);//TODO set health per sex + set num potions
-			newPlayer.savePlayer();
+			newPlayer.savePlayer(newPlayer);
 			new GameWorld(newPlayer, "new");
 			return true;
 		} else if (item.equals("female")) {
@@ -57,7 +57,7 @@ public class CreateCharacterMenu extends Menus {
 			//setIntial coordinate
 			newPlayer.setCurrentLocation(newPlayer.getLocationRepo().getInitialLocation());
 			newPlayer.setSex(item);//TODO set health per sex + set num potions
-			newPlayer.savePlayer();
+			newPlayer.savePlayer(newPlayer);
 			new GameWorld(newPlayer, "new");
 			return true;
 		} else {

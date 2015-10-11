@@ -2,6 +2,7 @@ package com.vojin.go.breakfree.prompter;
 
 
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.vojin.go.breakfree.navigation.Direction;
 import com.vojin.go.breakfree.navigation.Location;
 import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.GameOverException;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 /**
  * 
@@ -45,8 +47,41 @@ public enum InstructionsCollection {
 
     //TODO help instruction to print all possible instructions
 
+    @Instruction(instruction="help", aliases="h", description="Prints help")
+	public void command_help() {
+		Method[] methods = InstructionsCollection.class.getMethods();
+		int commandWidth = 0;
+		int descriptionWidth = 0;
+		Communicator.provide("");
+		for (Method method : methods) {
+			if (!method.isAnnotationPresent(Instruction.class)) {
+				continue;
+			}
+			Instruction annotation = method.getAnnotation(Instruction.class);
+			String command = annotation.instruction() + "( " + annotation.aliases() + "):";
+			String description = annotation.description();
+			if (command.length() > commandWidth) {
+				commandWidth = command.length();
+			}
+			if (description.length() > descriptionWidth) {
+				descriptionWidth = description.length();
+			}
+		}
+		for (Method method : methods) {
+			if (!method.isAnnotationPresent(Instruction.class)) {
+				continue;
+			}
+			Instruction annotation = method.getAnnotation(Instruction.class);
+			String command = (annotation.aliases().length() == 0) ? annotation.instruction() : annotation.instruction() + " (" + annotation.aliases() + "):";
+			String message = String.format("%-" + commandWidth + "s %-" + descriptionWidth + "s", command, annotation.description());
+
+			Communicator.provide(message);
+
+		}
+	}
+    
     @Instruction(instruction="fight", aliases="fight", description="Battle Starts")
-	public void commandFighting() throws GameOverException {
+	public void commandFighting() throws GameOverException, RepositoryException {
 		if (player.getCurrentLocation().getZombie().isAlive()) {
 			new Battle(player, player.getCurrentLocation().getZombie());
 		}
@@ -66,8 +101,8 @@ public enum InstructionsCollection {
 		}
 	}
     
-    @Instruction(instruction="go", aliases="g", description="Goto a direction")
-	public void commandGo(String arg) {
+    @Instruction(instruction="go", aliases="g", description="Goto a direction") 
+	public void commandGo(String arg) throws RepositoryException{
 		
 		arg = MOVE_DIRECTIONS.get(arg);
 		
@@ -79,17 +114,16 @@ public enum InstructionsCollection {
 			player.getCurrentLocation().setSeen(true);
 			player.getLocationRepo().saveLocation(player.getCurrentLocation());
 			Communicator.provide("** The Check Point has been saved **");
-			player.getCurrentLocation().print();	
-			//TODO keep a track of the monsters
+			player.getCurrentLocation().print();
+			// TODO keep a track of the monsters
 		} else {
 			Communicator.provide("There is no exit that way.");
 		}
 	}
    
     @Instruction(instruction="save", aliases="s", description="Save")
-	public void commandSaving() {
-    	player.savePlayer();
-		
+	public void commandSaving() throws RepositoryException {
+    	player.savePlayer(player);
 	}
     	
  

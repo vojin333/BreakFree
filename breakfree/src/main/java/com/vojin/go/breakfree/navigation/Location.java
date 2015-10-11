@@ -2,11 +2,8 @@ package com.vojin.go.breakfree.navigation;
 
 
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.vojin.go.breakfree.domain.entities.Zombie;
 import com.vojin.go.breakfree.utils.Communicator;
@@ -18,30 +15,16 @@ import com.vojin.go.breakfree.utils.Communicator;
  * This class represents a map Unit
  */
 @XmlRootElement(name = "location")
-@XmlAccessorType (XmlAccessType.FIELD)
+
 public class Location {
 	
-	@XmlElement(name = "coordinate")
 	private Coordinate coordinate;
-	
-	@XmlElement(name = "title")
 	private String title;
-	
-	@XmlElement(name = "description")
 	private String description;
-	
-	@XmlElement(name = "locationType")
 	private LocationType locationType;
-	
-	@XmlElement(name = "dangerRating")
 	private int dangerRating;
-	
-	@XmlElement(name = "isCeatureAlive")
 	private boolean isCeatureAlive;
-	
-	@XmlElement(name = "isSeen")
 	private boolean isSeen;
-	
 	
     private Zombie zombie;
 	
@@ -61,13 +44,14 @@ public class Location {
 	/**
 	 * @return the coordinate
 	 */
-	public Coordinate getCoordinate() {
+    public Coordinate getCoordinate() {
 		return coordinate;
 	}
 
 	/**
 	 * @param coordinate the coordinate to set
 	 */
+    @XmlElement(name = "coordinate")
 	public void setCoordinate(Coordinate coordinateRaw) {
 		this.coordinate = coordinateRaw;
 	}
@@ -82,6 +66,7 @@ public class Location {
 	/**
 	 * @param title the title to set
 	 */
+	@XmlElement(name = "title")
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -96,6 +81,7 @@ public class Location {
 	/**
 	 * @param description the description to set
 	 */
+	@XmlElement(name = "description")
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -110,6 +96,7 @@ public class Location {
 	/**
 	 * @param locationType the locationType to set
 	 */
+	@XmlElement(name = "locationType")
 	public void setLocationType(LocationType locationType) {
 		this.locationType = locationType;
 	}
@@ -124,6 +111,7 @@ public class Location {
 	/**
 	 * @param dangerRating the dangerRating to set
 	 */
+	@XmlElement(name = "dangerRating")
 	public void setDangerRating(int dangerRating) {
 		this.dangerRating = dangerRating;
 	}
@@ -154,6 +142,7 @@ public class Location {
 	 * 
 	 * @param isCeatureAlive
 	 */
+	@XmlElement(name = "isCeatureAlive")
 	public void setCeatureAlive(boolean isCeatureAlive) {
 		this.isCeatureAlive = isCeatureAlive;
 	}
@@ -170,6 +159,7 @@ public class Location {
 	 * 
 	 * @param isSeen
 	 */
+	@XmlElement(name = "isSeen")
 	public void setSeen(boolean isSeen) {
 		this.isSeen = isSeen;
 	}

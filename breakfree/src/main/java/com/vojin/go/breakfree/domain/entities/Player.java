@@ -3,30 +3,30 @@ package com.vojin.go.breakfree.domain.entities;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.Map;
 import java.util.Random;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.vojin.go.breakfree.domain.repository.LocationRepository;
 import com.vojin.go.breakfree.navigation.Coordinate;
 import com.vojin.go.breakfree.navigation.Direction;
 import com.vojin.go.breakfree.navigation.Location;
 import com.vojin.go.breakfree.utils.Communicator;
+import com.vojin.go.breakfree.utils.ObjectBinder;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 /**
  * This class deals with the player and all of its properties.
  * @author Vojin Nikolic
  *
  */
+@XmlRootElement
 public class Player extends CreatureEntity {
 
 	private int maxHitPoints;
@@ -35,6 +35,7 @@ public class Player extends CreatureEntity {
 	private int experience;
 	
 	private final Random random = new Random();
+	@XmlTransient
 	private Location currentLocation;
 
 	protected static LocationRepository locationRepo;
@@ -75,6 +76,7 @@ public class Player extends CreatureEntity {
 	 * @param numPotions
 	 *            the numPotions to set
 	 */
+	@XmlElement(name = "numpotions")
 	public void setNumPotions(int numPotions) {
 		this.numPotions = numPotions;
 	}
@@ -127,6 +129,7 @@ public class Player extends CreatureEntity {
 	 * @param currentLocation
 	 *            the currentLocation to set
 	 */
+	@XmlElement(name = "currentLocation")
 	public void setCurrentLocation(Location currentLocation) {
 		this.currentLocation = currentLocation;
 	}
@@ -155,6 +158,7 @@ public class Player extends CreatureEntity {
 	/**
 	 * @param sex the sex to set
 	 */
+	@XmlElement(name = "sex")
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
@@ -169,6 +173,7 @@ public class Player extends CreatureEntity {
 	/**
 	 * @param experience the experience to set
 	 */
+	@XmlElement(name = "experience")
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
@@ -176,6 +181,7 @@ public class Player extends CreatureEntity {
 	/**
 	 * @param maxHitPoints the maxHitPoints to set
 	 */
+	@XmlElement(name = "maxpoints")
 	public void setMaxHitPoints(int maxHitPoints) {
 		this.maxHitPoints = maxHitPoints;
 	}
@@ -235,76 +241,52 @@ public class Player extends CreatureEntity {
 	 * @see
 	 */
 	public String getPlayerFileName(String name) {
-		return "game_data/user_data/" + name + "/" + "profile.json";
+		return "game_data/user_data/" + name + "/" + "profile.xml";
 	}
 
 	/**
 	 * This method is responsible for loading all player data
 	 * @param name
 	 * @return
+	 * @throws RepositoryException 
 	 * @see
 	 */
-    public Player load(String name) {
-        Player player = new Player();
-        JsonParser parser = new JsonParser();
-        String fileName = getPlayerFileName(name);
-        try {
-            Reader reader = new FileReader(fileName);
-            JsonObject json = parser.parse(reader).getAsJsonObject();
-            player.setName(json.get("name").getAsString());
-            player.setDescription(json.get("description").getAsString());
-            player.setHealth(json.get("health").getAsInt());
-            player.setMinDamage(json.get("minDamage").getAsInt());
-            player.setMaxDamage(json.get("maxDamage").getAsInt());
-            player.setNumPotions(json.get("numPotions").getAsInt());
-            player.setExperience(json.get("experience").getAsInt());
-            player.setSex(json.get("sex").getAsString());
-            
-            Coordinate coordinate = new Coordinate(json.get("location").getAsString());
-            player.setCurrentLocation(locationRepo.getLocation(coordinate));
-            reader.close();
+	public Player load(String name) throws RepositoryException {
+		Player playerToReturn = null;
+		try {
+			File fileLocation = new File(name);
+			ObjectBinder objectBinder = new ObjectBinder();
+			playerToReturn = objectBinder.convertXMLToObject(Player.class, fileLocation);
+		} catch (JAXBException ex) {
+			throw new RepositoryException(ex.getMessage());
+		}
 
-        } catch (FileNotFoundException ex) {
-            Communicator.provide( "Unable to open file '" + fileName + "'.");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return player;
-    }
+		return playerToReturn;
+	}
     
     /**
      * This method is responsible for saving all player data
+     * @throws RepositoryException 
      * 
      * @see
      */
-    public void savePlayer() {
-        Gson gson = new Gson();
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", getName());
-        jsonObject.addProperty("description", getHealth());
-        jsonObject.addProperty("health", getHealth());
-        jsonObject.addProperty("minDamage", getMinDamage());
-        jsonObject.addProperty("maxDamage", getMaxDamage());
-        jsonObject.addProperty("numPotions", getNumPotions());
-        jsonObject.addProperty("experience", getExperience());
-        jsonObject.addProperty("sex", getSex());
-         
-        
-        Coordinate coordinate = getCurrentLocation().getCoordinate();
-        String coordinateLocation = coordinate.x + "," + coordinate.y;
-        jsonObject.addProperty("location", coordinateLocation);
-
-        String fileName = getPlayerFileName(getName());
-        new File(fileName).getParentFile().mkdirs();
+    public void savePlayer(Player player) throws RepositoryException {
+    	Player playerToSave = player;
         try {
-            Writer writer = new FileWriter(fileName);
-            gson.toJson(jsonObject, writer);
-            writer.close();
-            locationRepo.saveLocations();
-        } catch (IOException ex) {
-            Communicator.provide("\nUnable to save game data to file '" + fileName + "'.");
-        }
+            String fileName = getPlayerFileName(getName());
+            new File(fileName).getParentFile().mkdirs();
+            File fileLocation = new File(fileName);
+        	
+            JAXBContext context = JAXBContext.newInstance(playerToSave.getClass());
+            Marshaller mar = context.createMarshaller();
+            mar.marshal(playerToSave, fileLocation);
+            Communicator.provide("*** Game data has been saved ***");
+            
+        } catch (JAXBException e) {
+        	throw new RepositoryException(e.getMessage());
+//          Communicator.provide("\nUnable to save game data to file '" + fileName + "'.");
+			//TODO vojin
+		}
     }
 	
     /**

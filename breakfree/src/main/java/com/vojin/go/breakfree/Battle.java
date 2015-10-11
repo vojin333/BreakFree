@@ -7,6 +7,7 @@ import com.vojin.go.breakfree.domain.entities.Zombie;
 import com.vojin.go.breakfree.prompter.InstructionHandler;
 import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.GameOverException;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 /**
  * 
@@ -17,7 +18,7 @@ import com.vojin.go.breakfree.utils.GameOverException;
  */
 public class Battle {
 
-	public Battle(Player player, Zombie zombie) throws GameOverException {
+	public Battle(Player player, Zombie zombie) throws GameOverException, RepositoryException {
 		Communicator.provide("You encounter " + zombie + ": " + zombie.getDescription() + "\n");
 		Communicator.provide("Battle with " + zombie + " starts (" + player.getStatus() + " / " + zombie.getStatus() + ")");
 		while (player.isAlive() && zombie.isAlive()) {

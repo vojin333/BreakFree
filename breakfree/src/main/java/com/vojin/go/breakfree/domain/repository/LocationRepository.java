@@ -3,31 +3,23 @@ package com.vojin.go.breakfree.domain.repository;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.Marshaller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.vojin.go.breakfree.domain.entities.Player;
 import com.vojin.go.breakfree.navigation.Coordinate;
 import com.vojin.go.breakfree.navigation.Direction;
 import com.vojin.go.breakfree.navigation.Location;
-import com.vojin.go.breakfree.navigation.LocationType;
 import com.vojin.go.breakfree.navigation.Locations;
-import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.ConfiguratioProps;
 import com.vojin.go.breakfree.utils.ObjectBinder;
 import com.vojin.go.breakfree.utils.RepositoryException;
@@ -41,8 +33,7 @@ import com.vojin.go.breakfree.utils.RepositoryException;
  */
 public class LocationRepository {
 
-	
-    private String fileName;
+	private String fileName;
     private Map<Coordinate, Location> locations;
 
     /**
@@ -56,6 +47,10 @@ public class LocationRepository {
 		loadLocationRepositoryData();
 	}
 	
+	/**
+	 * Loads {@link Location} data for {@link Player}
+	 * @throws RepositoryException
+	 */
 	private void loadLocationRepositoryData() throws RepositoryException{
 		File file = new File(fileName);
 		if (!file.exists()) {
@@ -69,12 +64,14 @@ public class LocationRepository {
 				this.locations.put(location.getCoordinate(), location);
 			}
 		} catch (JAXBException jaxE) {
-			// TODO fix exceptions
-			jaxE.printStackTrace();
 			throw new RepositoryException(jaxE.getMessage());
 		}
 	}
 
+	/**
+	 * Copies game data to player folder
+	 * @throws RepositoryException
+	 */
 	private void copyLocationsFile() throws RepositoryException {
 		try {
 			File source = new File(ConfiguratioProps.LOCATION_FILE.getDescription());
@@ -82,51 +79,55 @@ public class LocationRepository {
 			dest.mkdirs();
 			Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RepositoryException(e.getMessage());
+			throw new RepositoryException("Problem with setting up players data");
 			
 		}
 	}
 	
-	public void saveLocations() {
+	/**
+	 * 
+	 * @throws RepositoryException
+	 */
+	public void saveLocations() throws RepositoryException {
         try {
-            JsonObject jsonObject = new JsonObject();
-            ObjectBinder objectBinder = new ObjectBinder();
             File fileLocation = new File(fileName);
-            for (Map.Entry<Coordinate,Location> entryLocation : locations.entrySet()) {
-                Location location = entryLocation.getValue();
-                objectBinder.convertObjectToXml(location.getClass(), fileLocation);
-                
-//                JsonObject locationJsonElement = new JsonObject();
-//                locationJsonElement.addProperty("title", location.getTitle());
-//                locationJsonElement.addProperty("coordinate", location.getCoordinate().toString());
-//                locationJsonElement.addProperty("description", location.getDescription());
-//                locationJsonElement.addProperty("locationType", location.getLocationType().toString());
-//                locationJsonElement.addProperty("isSeen", String.valueOf(location.isSeen()));
-//                locationJsonElement.addProperty("isCeatureAlive", String.valueOf(location.isCeatureAlive()));
-//                locationJsonElement.addProperty("danger", String.valueOf(location.getDangerRating()));
-//                jsonObject.add(location.getCoordinate().toString(), locationJsonElement);
-            }
-            Writer writer = new FileWriter(fileName);
-            Gson gson = new Gson();
-            gson.toJson(jsonObject, writer);
-            writer.close();
-        } catch (IOException ex) {
-            Communicator.provide("Unable to save to file " + fileName);
+            
+            Locations locationsObject = new Locations();
+            List<Location> listOfLocations = new ArrayList<Location>();
+			for (Map.Entry<Coordinate, Location> entryLocation : locations.entrySet()) {
+				listOfLocations.add(entryLocation.getValue());
+			}
+			locationsObject.setLocations(listOfLocations);
+            JAXBContext context = JAXBContext.newInstance(locationsObject.getClass());
+            Marshaller mar = context.createMarshaller();
+            mar.marshal(locationsObject, fileLocation);
+            
         } catch (JAXBException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+        	e.printStackTrace();
+        	throw new RepositoryException(e.getMessage());
+			
 		}
     }
 	
-	public void saveLocation(Location loactionToSave) {
-		 for (Map.Entry<Coordinate,Location> entryLocation : locations.entrySet()) {
-			 if (entryLocation.getKey().equals(loactionToSave.getCoordinate())){
-				 entryLocation.setValue(loactionToSave);
-			 }
-		 }
-		 saveLocations();
-    }
+	/**
+	 * 
+	 * @param loactionToSave
+	 * @throws RepositoryException
+	 */
+	public void saveLocation(Location loactionToSave) throws RepositoryException {
+		for (Map.Entry<Coordinate, Location> entryLocation : locations.entrySet()) {
+			if (entryLocation.getKey().equals(loactionToSave.getCoordinate())) {
+				entryLocation.setValue(loactionToSave);
+			}
+		}
+		try {
+			saveLocations();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			throw new RepositoryException(e.getMessage());
+		}
+	}
 	
 	public Location getLocation(Coordinate coordinate) {
 		if (coordinate == null) {
@@ -134,7 +135,6 @@ public class LocationRepository {
         }
         return locations.get(coordinate);
     }
-	
 	
     public Location getInitialLocation() {
         Coordinate coordinate = new Coordinate(0, 0);

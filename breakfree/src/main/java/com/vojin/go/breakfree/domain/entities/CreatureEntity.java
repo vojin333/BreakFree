@@ -1,5 +1,7 @@
 package com.vojin.go.breakfree.domain.entities;
 
+import javax.xml.bind.annotation.XmlElement;
+
 
 
 /**
@@ -9,6 +11,7 @@ package com.vojin.go.breakfree.domain.entities;
  * Main Entity the is a super class of all game entities
  *
  */
+
 public abstract class CreatureEntity {
 
 	protected String name;
@@ -54,6 +57,7 @@ public abstract class CreatureEntity {
 	/**
 	 * @param name the name to set
 	 */
+	@XmlElement(name = "name")
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -68,6 +72,7 @@ public abstract class CreatureEntity {
 	/**
 	 * @param description the description to set
 	 */
+	@XmlElement(name = "description")
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -82,6 +87,7 @@ public abstract class CreatureEntity {
 	/**
 	 * @param health the health to set
 	 */
+	@XmlElement(name = "health")
 	public void setHealth(int health) {
 		this.health = health;
 	}
@@ -96,6 +102,7 @@ public abstract class CreatureEntity {
 	/**
 	 * @param minDamage the minDamage to set
 	 */
+	@XmlElement(name = "mindamage")
 	public void setMinDamage(int minDamage) {
 		this.minDamage = minDamage;
 	}
@@ -110,6 +117,7 @@ public abstract class CreatureEntity {
 	/**
 	 * @param maxDamage the maxDamage to set
 	 */
+	@XmlElement(name = "maxdamage")
 	public void setMaxDamage(int maxDamage) {
 		this.maxDamage = maxDamage;
 	}

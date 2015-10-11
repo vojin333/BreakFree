@@ -7,6 +7,7 @@ package com.vojin.go.breakfree.domain.entities;
 import java.util.Random;
 
 import com.vojin.go.breakfree.utils.Communicator;
+import com.vojin.go.breakfree.utils.RepositoryException;
 /**
  * 
  * @author Vojin Nikolic
@@ -53,10 +54,16 @@ public class Zombie extends CreatureEntity{
 		Communicator.provide(player + " hits " + name + " for " + attackStrength + " HP of damage " + getStatus() + "\n");
 		if (health == 0) {
 			player.getCurrentLocation().setCeatureAlive(false);
-			player.getLocationRepo().saveLocation(player.getCurrentLocation());
-			player.setExperience(player.getExperience() + 1);
-			player.savePlayer();
-			Communicator.provide("  " + player + " crashes the skull of " + name + " into a red stain");
+			try {
+				player.getLocationRepo().saveLocation(player.getCurrentLocation());
+				player.setExperience(player.getExperience() + 1);
+				player.savePlayer(player);
+				Communicator.provide("  " + player + " crashes the skull of " + name + " into a red stain");
+			} catch (RepositoryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 

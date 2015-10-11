@@ -24,7 +24,7 @@ public class Locations {
         return locations;
     }
  
-    public void setLocations(List<Location> Locations) {
-        this.locations = Locations;
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 }

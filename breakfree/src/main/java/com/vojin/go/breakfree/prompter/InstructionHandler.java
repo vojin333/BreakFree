@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import com.vojin.go.breakfree.domain.entities.Player;
 import com.vojin.go.breakfree.utils.Communicator;
 import com.vojin.go.breakfree.utils.GameOverException;
+import com.vojin.go.breakfree.utils.RepositoryException;
 
 
 /**
@@ -45,7 +46,7 @@ public class InstructionHandler {
 		}
 	}
 
-	public boolean parse(Player player, String instruction) throws GameOverException {
+	public boolean parse(Player player, String instruction) throws GameOverException, RepositoryException {
 		InstructionsCollection instructionCollection = InstructionsCollection.getInstance();
 		instructionCollection.initPlayer(player);
 		// if 'exit' prompts game will exit main loop
@@ -62,6 +63,8 @@ public class InstructionHandler {
 						} catch (IllegalAccessException | InvocationTargetException e) {
 							if (e.getCause() instanceof GameOverException) {
 								throw (GameOverException) e.getCause();
+							} else if (e.getCause() instanceof RepositoryException) {
+								throw (RepositoryException) e.getCause();
 							} else {
 								e.getCause().printStackTrace();
 							}
@@ -77,6 +80,8 @@ public class InstructionHandler {
 					} catch (IllegalAccessException | InvocationTargetException e) {
 						if (e.getCause() instanceof GameOverException) {
 							throw (GameOverException) e.getCause();
+						}  else if (e.getCause() instanceof RepositoryException) {
+							throw (RepositoryException) e.getCause();
 						} else {
 							e.getCause().printStackTrace();
 						}
