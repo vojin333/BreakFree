@@ -208,16 +208,17 @@ public class Player extends CreatureEntity {
 	 * @see
 	 */
 	public int attack() {
-		return random.nextInt(maxDamage - minDamage + 1) + minDamage;
+		return random.nextInt(maxDamage - minDamage + 1) + minDamage + experience;
 	}
 
 	/**
-	 * This method is responsible for defending form {@link Zombie}
+	 * This method is responsible for defending from {@link Zombie}
 	 * @param zombie
 	 * 
 	 */
 	public void defend(Zombie zombie) {
 		int attackStrength = zombie.attack();
+		attackStrength = attackStrength - experience;
 		health = (health > attackStrength) ? health - attackStrength : 0;
 		Communicator.provide("  " + name + " is hit for " + attackStrength + " HP of damage " +  getStatus() + "\n");
 		if (health == 0) {
@@ -226,7 +227,7 @@ public class Player extends CreatureEntity {
 	}
 	
 	/**
-	 * This method is responsible for healing afer attack form {@link Zombie}
+	 * This method is responsible for healing after attack form {@link Zombie}
 	 *
 	 */
 	public void heal() {

@@ -13,7 +13,8 @@ import com.vojin.go.breakfree.utils.RepositoryException;
  * 
  * @author Vojin Nikolic
  *
- * Class that simulates the battle
+ * Class that simulates the battle 
+ * Throws {@link GameOverException} in case player dies
  *
  */
 public class Battle {
