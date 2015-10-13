@@ -69,7 +69,7 @@ To heal yourself in battle mode :
 
 	
 	
-Code extensibility and future tasks:
+Code extensibility and future tasks
 
 The story of the game can be easily switched into some other genres by:
 
