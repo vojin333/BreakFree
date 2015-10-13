@@ -5,18 +5,18 @@ Java command line text based game
 Setting Up The Game For Development or Gameplay:
 
 
-1.You can download the game with:
+1. You can download the game with:
 
     git clone https://github.com/vojin333/BreakFree.git
 
-2.Run with Maven
+2. Run with Maven
 
 	Install the game with : 
 		mvn clean install 
 	
 	It will automatically compile, build , and make executable jar.	
 	
-3.Run the game with:
+3. Run the game with:
 	java -jar breakfree-0.0.1-SNAPSHOT.jar
 	
 Additionally you can import into IDE as maven project and check the source code	
@@ -73,8 +73,8 @@ Code extensibility and future tasks
 
 The story of the game can be easily switched into some other genres by:
 
-1.Changing map overview in /game_data/game_world_data/loactions.xml
-2.And type of the creatures by inheriting CreatureEntity
+1. Changing map overview in /game_data/game_world_data/loactions.xml
+2. And type of the creatures by inheriting CreatureEntity
 
 Possible enhancements:
 
