@@ -72,10 +72,12 @@ To heal yourself in battle mode :
 Code extensibility and future tasks:
 
 The story of the game can be easily switched into some other genres by:
+
 1.Changing map overview in /game_data/game_world_data/loactions.xml
 2.And type of the creatures by inheriting CreatureEntity
 
 Possible enhancements:
+
 1. Adding Game Items in Player class and location.xml it can be created additional game feature to equip your player with more powerful tools for fight and map exploration.
 2. Game fog can be added because there is already a flag in  loactions.xml if specific loaction.xml has been seen.
 3. 3D movement can be added by expanding Coordinate class with additional axis and Direction class.
