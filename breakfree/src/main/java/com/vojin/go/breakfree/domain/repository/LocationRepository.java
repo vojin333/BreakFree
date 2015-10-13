@@ -131,9 +131,12 @@ public class LocationRepository {
         }
         return locations.get(coordinate);
     }
-	
+	/**
+	 * Gets game initial location depending on map that is created in locations.xml
+	 * @return {@link Location}
+	 */
     public Location getInitialLocation() {
-        Coordinate coordinate = new Coordinate(0, 0);
+        Coordinate coordinate = new Coordinate(-2, -2);
         return getLocation(coordinate);
     }
 	

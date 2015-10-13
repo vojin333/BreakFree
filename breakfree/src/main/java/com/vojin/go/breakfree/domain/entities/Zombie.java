@@ -59,7 +59,11 @@ public class Zombie extends CreatureEntity{
 				player.getLocationRepo().saveLocation(player.getCurrentLocation());
 				player.gainExperience();
 				player.savePlayer(player);
-				Communicator.provide("  " + player + " crashes the skull of " + name + "zombie into a red stain");
+				Communicator.provide("  " + player + " crashes the skull of a " + name + " zombie into a red stain");
+				if (player.getCurrentLocation().isFinal()) {
+					Communicator.provide("  "+ player.getDescription() + " " + player.getName() + " has managed to escape the Hospital !!!!!!");
+					Communicator.provide(" ******   Congratulations  ******");
+				}
 			} catch (RepositoryException e) {
 				throw e;
 			}

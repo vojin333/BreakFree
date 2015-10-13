@@ -29,7 +29,7 @@ public class CreateCharacterMenu extends Menus {
 		this.characterSexMenuItems.add(new MenuItem("female", "female has initialy less stronger hits but faster experiance gain"));
 		
 		while (true) {
-			Communicator.provide("Write somthing about your character:");
+			Communicator.provide("Write one word which describes your character:");
 			String description = Communicator.accept();
 			
 			Communicator.provide("Choose sex of your character");

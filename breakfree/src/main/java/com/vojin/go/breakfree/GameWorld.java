@@ -54,10 +54,17 @@ public class GameWorld {
 		try {
 			while (continueGame) {
 				if (player.getCurrentLocation().isCeatureAlive()) {
-					player.getCurrentLocation().setZombie(CreatureFactory.createCreature());
-					Communicator.provide(player.getCurrentLocation().getZombie().getDescription() + " and it is crwaling towards you");
+					if (player.getCurrentLocation().isFinal()) {
+						player.getCurrentLocation().setZombie(CreatureFactory.createFinalCreature());
+						Communicator.provide(player.getCurrentLocation().getZombie().getDescription());
+					} else {
+						player.getCurrentLocation().setZombie(CreatureFactory.createCreature());
+						Communicator.provide(player.getCurrentLocation().getZombie().getDescription() + " and it is crwaling towards you");
+					}
 					Communicator.provide("If you wish to fight a zombie type 'fight'");
 					
+				} else {
+					Communicator.provide("There is no zombie in this room");
 				}
 				Communicator.provide("\nIf you wish to explore further (type 'go' and first letter of direction i.e: 'go n' to go north)");
 				player.printPossibleExits();
@@ -81,7 +88,7 @@ public class GameWorld {
 	}
 
 	private void printIntro() {
-		Communicator.provide("2015 late summer. Dum dum dum dum dum dum sound of the heartbeat");
+		Communicator.provide("2015 late summer. Dum dum, dum dum, dum dum (sound of the heartbeat)");
 		Communicator.provide("That is the only sound present. Everything is blurry.");
 		Communicator.provide("Hospital room is small and dirty. Some smell was getting from outside the small window.");
 		Communicator.provide("Next to a bed there is a chair with all the clothes,everything is there, even a police badge, gun and a teaser.");

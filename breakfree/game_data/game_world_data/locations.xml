@@ -6,7 +6,8 @@
 		<locationType>HOSPITAL</locationType>
 		<isCeatureAlive>false</isCeatureAlive>
 		<isSeen>true</isSeen>
-		<coordinate x="0" y="0"/>
+		<isFinal>false</isFinal>
+		<coordinate x="-2" y="-2"/>
 	</location>
 	<location>
 		<danger>1</danger>
@@ -15,7 +16,8 @@
 		<locationType>HOSPITAL</locationType>
 		<isCeatureAlive>true</isCeatureAlive>
 		<isSeen>false</isSeen>
-		<coordinate x="-1" y="0"/>
+		<isFinal>false</isFinal>
+		<coordinate x="-1" y="-2"/>
 	</location>
 	<location>
 		<danger>1</danger>
@@ -24,7 +26,8 @@
 		<locationType>HOSPITAL</locationType>
 		<isCeatureAlive>true</isCeatureAlive>
 		<isSeen>false</isSeen>
-		<coordinate x="1" y="0"/>
+		<isFinal>false</isFinal>
+		<coordinate x="-1" y="-1"/>
 	</location>
 	<location>
 		<danger>1</danger>
@@ -33,7 +36,8 @@
 		<locationType>HOSPITAL</locationType>
 		<isCeatureAlive>true</isCeatureAlive>
 		<isSeen>false</isSeen>
-		<coordinate x="-1" y="1"/>
+		<isFinal>false</isFinal>
+		<coordinate x="0" y="-2"/>
 	</location>
 	<location>
 		<danger>1</danger>
@@ -42,7 +46,8 @@
 		<locationType>HOSPITAL</locationType>
 		<isCeatureAlive>true</isCeatureAlive>
 		<isSeen>false</isSeen>
-		<coordinate x="0" y="1"/>
+		<isFinal>false</isFinal>
+		<coordinate x="0" y="-1"/>
 	</location>
 	<location>
 		<danger>1</danger>
@@ -51,6 +56,56 @@
 		<locationType>HOSPITAL</locationType>
 		<isCeatureAlive>true</isCeatureAlive>
 		<isSeen>false</isSeen>
+		<coordinate x="0" y="0"/>
+	</location>
+	<location>
+		<danger>1</danger>
+		<description>Very big, spacious room, with metal tables, chairs and a lot of windows. In the end there is a long table like a buffet with plates,pots and food leftovers, flies are buzzing around food, it is empty, however some sound of the metal clinging is echoing all over that big space.</description>
+		<title>Cafeteria</title>
+		<locationType>HOSPITAL</locationType>
+		<isCeatureAlive>true</isCeatureAlive>
+		<isSeen>false</isSeen>
+		<isFinal>false</isFinal>
+		<coordinate x="1" y="0"/>
+	</location>
+	<location>
+		<danger>1</danger>
+		<description>Very cold big room space with two metal beds, both with corps on them, covered with white clean sheets</description>
+		<title>Morgue</title>
+		<locationType>HOSPITAL</locationType>
+		<isCeatureAlive>true</isCeatureAlive>
+		<isSeen>false</isSeen>
+		<isFinal>false</isFinal>
+		<coordinate x="2" y="0"/>
+	</location>
+	<location>
+		<danger>1</danger>
+		<description>Light room equipped with glass bottles and  instruments with colorful fluids in it. Glass shelfs and a lot of medical supplies.</description>
+		<title>Laboratory</title>
+		<locationType>HOSPITAL</locationType>
+		<isCeatureAlive>true</isCeatureAlive>
+		<isSeen>false</isSeen>
+		<isFinal>false</isFinal>
 		<coordinate x="1" y="1"/>
+	</location>
+	<location>
+		<danger>1</danger>
+		<description>Small, dark space with one light bulb and wooden shelfs filled with various boxes, medicines, pills and small bottles.</description>
+		<title>Pharmacy</title>
+		<locationType>HOSPITAL</locationType>
+		<isCeatureAlive>true</isCeatureAlive>
+		<isSeen>false</isSeen>
+		<isFinal>false</isFinal>
+		<coordinate x="2" y="1"/>
+	</location>
+	<location>
+		<danger>1</danger>
+		<description>One desk with an open notebook and empty chair behind, one broken phone on the floor. Across desk there are 5 chairs and a lot of magazines.</description>
+		<title>Waiting Room</title>
+		<locationType>HOSPITAL</locationType>
+		<isCeatureAlive>true</isCeatureAlive>
+		<isSeen>false</isSeen>
+		<isFinal>true</isFinal>
+		<coordinate x="2" y="2"/>
 	</location>
 </locations>

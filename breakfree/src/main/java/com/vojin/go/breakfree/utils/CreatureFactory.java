@@ -30,11 +30,16 @@ public class CreatureFactory {
 	        } while (monstersSeen.contains(i));
 	        monstersSeen.add(i);
         if (i == 0) {
-            return new Zombie("Male", CreatureType.MALE.getDescription(), 30, 8, 12);
+            return new Zombie("Male", CreatureType.MALE.getDescription(), 30, 6, 20);
         } else if (i == 1) {
-            return new Zombie("Feamle", CreatureType.FEMALE.getDescription(), 25, 6, 8);
+            return new Zombie("Female", CreatureType.FEMALE.getDescription(), 25, 6, 18);
         } else {
-            return new Zombie("Child", CreatureType.CHILD.getDescription(), 20, 4, 6);
+            return new Zombie("Child", CreatureType.CHILD.getDescription(), 20, 6, 14);
         }
     }
+	
+	public static Zombie createFinalCreature() {
+		return new Zombie("Mutant", CreatureType.QUEEN.getDescription(), 45, 10, 25);
+	}
+	
 }

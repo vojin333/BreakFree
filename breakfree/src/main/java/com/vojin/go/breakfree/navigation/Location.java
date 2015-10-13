@@ -25,6 +25,7 @@ public class Location {
 	private int dangerRating;
 	private boolean isCeatureAlive;
 	private boolean isSeen;
+	private boolean isFinal;
 	
     private Zombie zombie;
 	
@@ -165,8 +166,21 @@ public class Location {
 		this.isSeen = isSeen;
 	}
 
-	
-	
+	/**
+	 * @return the isFinal
+	 */
+	public boolean isFinal() {
+		return isFinal;
+	}
+
+	/**
+	 * @param isFinal the isFinal to set
+	 */
+	@XmlElement(name = "isFinal")
+	public void setFinal(boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

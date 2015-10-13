@@ -123,7 +123,7 @@ public enum InstructionsCollection {
     	player.savePlayer(player);
 	}
     
-    @Instruction(instruction="stats", aliases="stats", description="Save")
+    @Instruction(instruction="stats", aliases="stats", description="Get player statistics")
 	public void commandStatistics() {
     	Communicator.provide(player.getStats());
 	}
