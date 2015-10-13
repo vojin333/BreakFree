@@ -3,6 +3,8 @@
 Java command line text based game
 
 Setting Up The Game For Development or Gameplay:
+
+
 1.You can download the game with:
 
     git clone https://github.com/vojin333/BreakFree.git
