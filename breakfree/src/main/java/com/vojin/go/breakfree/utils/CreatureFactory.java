@@ -20,7 +20,6 @@ public class CreatureFactory {
 	private final static int NUM_ZOMBIES = 3;
 	private final static Set<Integer> monstersSeen = new HashSet<Integer>();
 	
-	//TODO random check
 	public static Zombie createCreature() {
 		 if (monstersSeen.size() == NUM_ZOMBIES) {
 	            monstersSeen.clear();
@@ -31,11 +30,11 @@ public class CreatureFactory {
 	        } while (monstersSeen.contains(i));
 	        monstersSeen.add(i);
         if (i == 0) {
-            return new Zombie("Male", CreatureType.MALE.getDescription(), 40, 8, 12);
+            return new Zombie("Male", CreatureType.MALE.getDescription(), 30, 8, 12);
         } else if (i == 1) {
-            return new Zombie("Feamle", CreatureType.FEMALE.getDescription(), 35, 4, 6);
+            return new Zombie("Feamle", CreatureType.FEMALE.getDescription(), 25, 6, 8);
         } else {
-            return new Zombie("Child", CreatureType.CHILD.getDescription(), 35, 1, 2);
+            return new Zombie("Child", CreatureType.CHILD.getDescription(), 20, 4, 6);
         }
     }
 }

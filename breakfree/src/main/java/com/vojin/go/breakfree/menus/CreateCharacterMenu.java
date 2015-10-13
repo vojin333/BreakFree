@@ -29,34 +29,40 @@ public class CreateCharacterMenu extends Menus {
 		this.characterSexMenuItems.add(new MenuItem("female", "female has initialy less stronger hits but faster experiance gain"));
 		
 		while (true) {
+			Communicator.provide("Write somthing about your character:");
+			String description = Communicator.accept();
+			
 			Communicator.provide("Choose sex of your character");
 			MenuItem selectedMenuItem = displayMenu(characterSexMenuItems);
-			if(selectAnItem(selectedMenuItem, playerName)){
+			if (selectAnItem(selectedMenuItem, playerName, description)) {
 				break;
 			}
-			
 		}
 	}
 	
-	private boolean selectAnItem(MenuItem menuItem, String playerName) throws GameOverException, RepositoryException{
+	private boolean selectAnItem(MenuItem menuItem, String playerName, String description) throws GameOverException, RepositoryException{
 		String item = menuItem.getInstructionCommand();
 		if (item.equals("male")) {
 			Player newPlayer = new Player();
 			newPlayer.setName(playerName);
+			newPlayer.setDescription(description);
+			newPlayer.setMinDamage(5);
 			newPlayer.setLocationRepo(BeanFactory.createLocationRepository(playerName));
 			//setIntial coordinate
 			newPlayer.setCurrentLocation(newPlayer.getLocationRepo().getInitialLocation());
-			newPlayer.setSex(item);//TODO set health per sex + set num potions
+			newPlayer.setSex(item);
 			newPlayer.savePlayer(newPlayer);
 			new GameWorld(newPlayer, "new");
 			return true;
 		} else if (item.equals("female")) {
 			Player newPlayer = new Player();
 			newPlayer.setName(playerName);
+			newPlayer.setDescription(description);
+			newPlayer.setMinDamage(8);
 			newPlayer.setLocationRepo(BeanFactory.createLocationRepository(playerName));
 			//setIntial coordinate
 			newPlayer.setCurrentLocation(newPlayer.getLocationRepo().getInitialLocation());
-			newPlayer.setSex(item);//TODO set health per sex + set num potions
+			newPlayer.setSex(item);
 			newPlayer.savePlayer(newPlayer);
 			new GameWorld(newPlayer, "new");
 			return true;

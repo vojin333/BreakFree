@@ -287,7 +287,6 @@ public class Player extends CreatureEntity {
             Marshaller mar = context.createMarshaller();
             mar.marshal(playerToSave, fileLocation);
             Communicator.provide("*** Game data has been saved ***");
-            
         } catch (JAXBException e) {
         	throw new RepositoryException("Unable to save game data to file");
 		}
@@ -303,6 +302,19 @@ public class Player extends CreatureEntity {
   
          return message;
     }
+    
+    /**
+     * Setting experiance per sex
+     * 
+     * @see
+     */
+	public void gainExperience() {
+		if (getSex().equals("male")) {
+			setExperience(experience + 1);
+		} else {
+			setExperience(experience + 2);
+		}
+	}
     
 	@Override
 	public String toString() {

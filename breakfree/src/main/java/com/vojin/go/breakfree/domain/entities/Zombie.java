@@ -57,7 +57,7 @@ public class Zombie extends CreatureEntity{
 			player.getCurrentLocation().setCeatureAlive(false);
 			try {
 				player.getLocationRepo().saveLocation(player.getCurrentLocation());
-				player.setExperience(player.getExperience() + 1);
+				player.gainExperience();
 				player.savePlayer(player);
 				Communicator.provide("  " + player + " crashes the skull of " + name + "zombie into a red stain");
 			} catch (RepositoryException e) {
@@ -66,7 +66,7 @@ public class Zombie extends CreatureEntity{
 
 		}
 	}
-
+	
     public boolean isAlive() {
         return health > 0;
     }
